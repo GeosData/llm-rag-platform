@@ -99,6 +99,12 @@ make migration msg="add users table"
 make migrate       # Apply migrations
 ```
 
+## Architecture decisions
+
+The non-obvious calls are documented as ADRs under [`docs/adr/`](docs/adr/):
+
+- [ADR-001: Qdrant over pgvector](docs/adr/0001-vector-store-qdrant-vs-pgvector.md) — why we accept the operational cost of a separate vector engine instead of staying inside Postgres.
+
 ---
 
 *Built by [jotive](https://github.com/jotive) | [dev.jotive.com.co](https://dev.jotive.com.co) | [GeosData](https://geosdata.com)*
