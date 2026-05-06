@@ -99,6 +99,17 @@ make migration msg="add users table"
 make migrate       # Apply migrations
 ```
 
+### Pre-commit hooks
+
+Install once after cloning to block style/format issues before they hit CI:
+
+```bash
+pip install pre-commit
+pre-commit install
+```
+
+Hooks run on `git commit`. Manual run: `pre-commit run --all-files`.
+
 ## Architecture decisions
 
 The non-obvious calls are documented as ADRs under [`docs/adr/`](docs/adr/):

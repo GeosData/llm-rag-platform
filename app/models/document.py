@@ -23,7 +23,9 @@ class Document(Base):
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
     )
 
-    chunks: Mapped[list["Chunk"]] = relationship(back_populates="document", cascade="all, delete-orphan")
+    chunks: Mapped[list["Chunk"]] = relationship(
+        back_populates="document", cascade="all, delete-orphan"
+    )
 
 
 class Chunk(Base):

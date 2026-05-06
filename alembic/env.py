@@ -1,12 +1,12 @@
 from logging.config import fileConfig
 
-from alembic import context
 from sqlalchemy import pool
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
+from alembic import context
 from app.config import settings
 from app.database import Base
-from app.models.document import Document, Chunk  # noqa: F401
+from app.models.document import Chunk, Document  # noqa: F401
 from app.models.query import QueryLog  # noqa: F401
 
 config = context.config
@@ -44,6 +44,7 @@ async def run_async_migrations() -> None:
 
 def run_migrations_online() -> None:
     import asyncio
+
     asyncio.run(run_async_migrations())
 
 

@@ -4,7 +4,8 @@ from app.config import settings
 from app.services.embeddings import generate_embedding, get_openai_client
 from app.services.vector_store import search_similar
 
-SYSTEM_PROMPT = """You are a helpful assistant that answers questions based on the provided document context.
+SYSTEM_PROMPT = """You are a helpful assistant that answers questions based on \
+the provided document context.
 Rules:
 - Only answer based on the provided context. If the context doesn't contain the answer, say so.
 - Cite your sources by referencing the document name and page number when available.
@@ -32,13 +33,15 @@ async def query_documents(question: str) -> dict:
         source_label += "]"
 
         context_parts.append(f"{source_label}\n{r['content']}")
-        sources.append({
-            "content": r["content"],
-            "document_id": r["document_id"],
-            "document_name": r["document_name"],
-            "page_number": r.get("page_number"),
-            "score": r["score"],
-        })
+        sources.append(
+            {
+                "content": r["content"],
+                "document_id": r["document_id"],
+                "document_name": r["document_name"],
+                "page_number": r.get("page_number"),
+                "score": r["score"],
+            }
+        )
 
     context = "\n\n---\n\n".join(context_parts)
 

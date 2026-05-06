@@ -27,7 +27,9 @@ async def test_query_documents_builds_context_and_returns_sources():
     ]
 
     fake_completion = MagicMock()
-    fake_completion.choices = [MagicMock(message=MagicMock(content="Both work; Qdrant scales independently."))]
+    fake_completion.choices = [
+        MagicMock(message=MagicMock(content="Both work; Qdrant scales independently."))
+    ]
     fake_completion.usage = MagicMock(prompt_tokens=120, completion_tokens=18)
 
     fake_client = MagicMock()
@@ -52,7 +54,9 @@ async def test_query_documents_builds_context_and_returns_sources():
 @pytest.mark.asyncio
 async def test_query_documents_handles_empty_retrieval():
     fake_completion = MagicMock()
-    fake_completion.choices = [MagicMock(message=MagicMock(content="The context does not contain that information."))]
+    fake_completion.choices = [
+        MagicMock(message=MagicMock(content="The context does not contain that information."))
+    ]
     fake_completion.usage = MagicMock(prompt_tokens=40, completion_tokens=10)
 
     fake_client = MagicMock()

@@ -40,7 +40,7 @@ async def upsert_vectors(
             vector=embedding,
             payload=payload,
         )
-        for chunk_id, embedding, payload in zip(chunk_ids, embeddings, payloads)
+        for chunk_id, embedding, payload in zip(chunk_ids, embeddings, payloads, strict=True)
     ]
     await client.upsert(collection_name=settings.qdrant_collection, points=points)
 
@@ -70,7 +70,7 @@ async def search_similar(
 async def delete_document_vectors(document_id: str) -> None:
     """Delete all vectors for a document."""
     client = get_qdrant_client()
-    from qdrant_client.models import Filter, FieldCondition, MatchValue
+    from qdrant_client.models import FieldCondition, Filter, MatchValue
 
     await client.delete(
         collection_name=settings.qdrant_collection,
