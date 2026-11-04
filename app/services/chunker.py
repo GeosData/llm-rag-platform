@@ -14,6 +14,8 @@ def chunk_text(
     overlap: int = settings.chunk_overlap,
 ) -> list[str]:
     """Split text into overlapping chunks by token count."""
+    if chunk_size <= 0 or overlap < 0 or overlap >= chunk_size:
+        raise ValueError("chunk_size must be positive and overlap must be in [0, chunk_size)")
     enc = tiktoken.get_encoding("cl100k_base")
     tokens = enc.encode(text)
 

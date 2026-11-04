@@ -17,9 +17,9 @@ Plan público. Items concretos, no ideas. Si no está acá, no está commited.
 
 - [ ] **ADR-002**: why GPT-4o-mini over Claude/Gemini
 - [ ] **ADR-003**: chunking strategy (512 tokens / 64 overlap, why not semantic chunking)
-- [ ] **Tests**: `services/ingest.py` (PDF parse + chunk + embed + upsert end-to-end with fixtures)
-- [ ] **Tests**: API handlers (`api/documents.py`, `api/queries.py`) using `httpx.AsyncClient`
-- [ ] **Coverage target**: 70% global
+- [x] **Tests**: `services/ingest.py` (PDF parse + chunk + embed + upsert end-to-end with fixtures)
+- [x] **Tests**: API handlers (`api/documents.py`, `api/queries.py`) using `httpx.AsyncClient`
+- [x] **Coverage target**: 70% global (enforced in CI via `make coverage`)
 - [ ] **Hybrid search behind feature flag**: combine vector similarity with PostgreSQL FTS for keyword-heavy queries
 - [ ] **Reranking**: optional cross-encoder reranker for top-20 → top-5
 

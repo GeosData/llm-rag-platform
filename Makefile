@@ -1,4 +1,4 @@
-.PHONY: dev down test lint format type-check migrate migration
+.PHONY: dev down test coverage lint format type-check migrate migration
 
 dev:
 	docker compose up --build
@@ -8,6 +8,9 @@ down:
 
 test:
 	python -m pytest
+
+coverage:
+	python -m pytest --cov-fail-under=70
 
 lint:
 	python -m ruff check app tests

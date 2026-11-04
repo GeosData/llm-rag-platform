@@ -1,3 +1,5 @@
+import pytest
+
 from app.services.chunker import chunk_text, count_tokens
 
 
@@ -35,3 +37,20 @@ def test_chunk_text_overlaps_chunks():
 def test_chunk_text_handles_whitespace_only_input():
     chunks = chunk_text("   \n\t  ", chunk_size=128, overlap=16)
     assert chunks == []
+
+
+@pytest.mark.parametrize(
+    ("chunk_size", "overlap"),
+    [(0, 0), (-5, 0), (10, 10), (10, 11), (10, -1)],
+)
+def test_chunk_text_rejects_invalid_window(chunk_size, overlap):
+    with pytest.raises(ValueError):
+        chunk_text("some text", chunk_size=chunk_size, overlap=overlap)
+
+
+def test_chunk_text_default_window_uses_settings():
+    text = " ".join(f"word{i}" for i in range(2000))
+
+    chunks = chunk_text(text)
+
+    assert len(chunks) > 1
