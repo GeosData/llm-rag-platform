@@ -13,7 +13,8 @@ from app.services.vector_store import delete_document_vectors
 router = APIRouter(prefix="/documents", tags=["documents"])
 
 ALLOWED_TYPES = {"application/pdf", "text/plain"}
-MAX_FILE_SIZE = 20 * 1024 * 1024  # 20MB
+MAX_FILE_SIZE = 20 * 1024 * 1024
+MAX_FILENAME_LENGTH = 500
 
 
 @router.post("/", response_model=DocumentResponse, status_code=201)
@@ -21,19 +22,21 @@ async def upload_document(file: UploadFile, db: AsyncSession = Depends(get_db)):
     if file.content_type not in ALLOWED_TYPES:
         raise HTTPException(400, f"Unsupported file type: {file.content_type}. Use PDF or TXT.")
 
-    file_bytes = await file.read()
+    file_bytes = await file.read(MAX_FILE_SIZE + 1)
     if len(file_bytes) > MAX_FILE_SIZE:
         raise HTTPException(400, "File too large. Max 20MB.")
 
     doc = Document(
         id=uuid.uuid4(),
-        filename=file.filename or "untitled",
+        filename=(file.filename or "untitled")[:MAX_FILENAME_LENGTH],
         content_type=file.content_type or "application/octet-stream",
     )
     db.add(doc)
     await db.flush()
 
     await ingest_document(db, doc, file_bytes)
+    await db.flush()
+    await db.refresh(doc)
 
     return doc
 

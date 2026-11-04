@@ -6,6 +6,16 @@ Types: `DECISION` | `EVENT` | `MILESTONE` | `KILL` | `PIVOT` | `LOCK` | `BLOCKER
 
 ---
 
+## 2026-11-04 — MILESTONE — Test suite, CI, coverage gate
+
+- Tests added for ingest, vector store, embeddings, chunker validation and the documents/query API with the LLM, embeddings and Qdrant stubbed; API tests run against in-memory SQLite.
+- Tokenizer is stubbed in tests so the suite runs offline.
+- GitHub Actions workflow runs ruff lint, format check and pytest with a 70% coverage gate.
+- Fixed: `POST /documents/` returned 500 because `updated_at` was lazy-loaded outside the async session; the document is now refreshed before serialization.
+- Fixed: uploads are read with a size cap instead of fully into memory; filenames are truncated to the column length; `chunk_text` rejects windows that would loop forever.
+
+---
+
 ## 2026-05-05 — MILESTONE — Open-sourced + ADR-001 + tests
 
 Repo flipped from private to public on GeosData org.
